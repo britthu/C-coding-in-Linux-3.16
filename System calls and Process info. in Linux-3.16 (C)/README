@@ -1,0 +1,46 @@
+Brittany Miller
+
+************* Project2 *************
+Solution Approaches:
+== pid_info module
+	Firstly, declaring global varibale and bein gbale to change it with module_param. Then declare a pointer task that point to current task-strct them using for_each_process to traverse through the list of task_struct. based on global variable value, if task_struct pid is equal to the global value then the necessary information was print. List_for_each() and list_entry was used to access and traverse the struct member children in the task_struct and print the information requested.
+	So, initially I thought the problem was asking to print the process being asked for as the parent
+of the its children. So, there was no code to print the parent information of the current process. Also, the doce i wrote to print the children information was initially poin to the next child by setting the third parameter list_entry to children instead of sibling.   
+
+==pid_vminfo module
+Find syntax for a proc file was the first step. Since navigating the task_struct was now possible by knowing the member structs, all that was needed were print statements. A while loop that printed information about each vm_area_struct found in current task_struct, as there were numerous. Each vm_area_struct had a pointer to the next one so a pointer to type struct vm_area_struct/mmap was made to traverse that list and extract the information requested.
+
+==sys_my_set_state
+Firstly, to check if the integer passed as accumulator was non-negative, if it is negative then a negative value is returned (-EINVAL). Then check if the kernel string variable is empty, if not free the memory allocated to it. The next step wa sto allocate memory the size of the parameter then set the kernel equal to the parameter values.
+
+==sys_get_and_sum
+Firstly, the paramter value was checked for a non-negative then the sum of the paramter variable an dthe kernel variable was check to see if it was over INT_MAX, if it is larger then return EOVERFLOW. The kernel veriable was updated and paramter pointer set to the kernel variable value.
+
+==sys_my_get_string
+Firstly, check if kernel varibale is empty, if so return ENODATA. Then take the minimal value between the length of the kernel variable and the user variable, paramter bsize, and set the provided buffer to a copy of the kernel variable.
+
+
+Challenges:
+-the version of C was pretty sensitive. I would get errors for declaring varibales after loop
+within system calls
+-navigating the linux file system through the command line and compiling took time. After waiting for that then being able to properly test the syscalls, more or less slowed progress.
+-storage management. After dedicating clos to 20GB extra, on of our VM images could not compiled due to a lack of memory. We had to start over from part 0 to do part 2.
+-trying to understand the instrcutions for part 1 and part 2.
+
+Links:
+https://tssurya.wordpress.com/2014/08/19/adding-a-hello-world-system-call-to-linux-kernel-3-16-0/
+
+http://lxr.linux.no/#linux+v3.16/include/linux/sched.h
+
+http://tuxthink.blogspot.com/2011/03/listforeach-and-listentry.html
+
+http://derekmolloy.ie/writing-a-linux-kernel-module-part-1-introduction/
+
+https://www.cyberciti.biz/tips/build-linux-kernel-module-against-installed-kernel-source-tree.html
+
+https://www.linux.com/learn/kernel-newbie-corner-kernel-debugging-proc-sequence-files-part-2
+
+http://www.makelinux.net/books/lkd2/ch14lev1sec2
+
+
+
